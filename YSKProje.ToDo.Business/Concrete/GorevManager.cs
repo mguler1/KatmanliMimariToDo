@@ -16,6 +16,11 @@ namespace YSKProje.ToDo.Business.Concrete
             
         }
 
+        public List<Gorev> GetirAciliyetIleTamamlanmayan()
+        {
+            return _gorevDal.GetirAciliyetIleTamamlanmayan();
+        }
+
         public List<Gorev> GetirHepsi()
         {
             return _gorevDal.GetirHepsi();

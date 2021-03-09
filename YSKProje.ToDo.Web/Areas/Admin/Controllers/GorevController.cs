@@ -24,7 +24,7 @@ namespace YSKProje.ToDo.Web.Areas.Admin.Controllers
         public IActionResult Index()
         {
             TempData["Active"] = "gorev";
-            List<Gorev> gorevler = _gorevService.GetirHepsi();
+            List<Gorev> gorevler = _gorevService.GetirAciliyetIleTamamlanmayan();
             List<GorevListViewModel> models = new List<GorevListViewModel>();
             foreach (var item in gorevler)
             {
