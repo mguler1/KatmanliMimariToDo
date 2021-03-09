@@ -43,11 +43,11 @@ namespace YSKProje.ToDo.Web.Areas.Admin.Controllers
             return View(models);
 
         }
-    
+
         public IActionResult EkleGorev()
         {
-           
-            ViewBag.Aciliyetler = new SelectList(_aciliyetService.GetirHepsi(),"Id","Tanim");  
+
+            ViewBag.Aciliyetler = new SelectList(_aciliyetService.GetirHepsi(), "Id", "Tanim");
             TempData["Active"] = "gorev";
             return View(new GorevAddViewModel());
         }
@@ -59,14 +59,52 @@ namespace YSKProje.ToDo.Web.Areas.Admin.Controllers
             {
                 _gorevService.Kaydet(new Gorev()
                 {
-                      Aciklama = model.Aciklama,
-                      Ad = model.Ad,
-                      AciliyetId = model.AciliyetId,
+                    Aciklama = model.Aciklama,
+                    Ad = model.Ad,
+                    AciliyetId = model.AciliyetId,
                 });
                 return RedirectToAction("Index");
             }
             return View(model);
 
         }
+        public IActionResult GuncelleGorev(int id)
+        {
+            TempData["Active"] = "gorev";
+            var gorev = _gorevService.GetirIdile(id);
+            GorevUpdateViewModel model = new GorevUpdateViewModel()
+            {
+                Id = gorev.Id,
+                Ad = gorev.Ad,
+                Aciklama = gorev.Aciklama,
+                AciliyetId = gorev.AciliyetId,
+            };
+            ViewBag.Aciliyetler = new SelectList(_aciliyetService.GetirHepsi(), "Id", "Tanim", gorev.AciliyetId);
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult GuncelleGorev(GorevUpdateViewModel model)
+        {
+            TempData["Active"] = "gorev";
+            if (ModelState.IsValid)
+            {
+                _gorevService.Guncelle(new Gorev
+                {
+                    Id = model.Id,
+                    Ad = model.Ad,
+                    Aciklama = model.Aciklama,
+                    AciliyetId = model.AciliyetId,
+                });
+                return RedirectToAction("Index");
+            }
+            return View(model);
+        }
+        public IActionResult SilGorev(int id )
+        {
+            _gorevService.Sil(new Gorev { Id = id });
+            return Json(null);
+        }
     }
+
 }

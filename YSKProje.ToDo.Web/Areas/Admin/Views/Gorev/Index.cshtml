@@ -3,6 +3,7 @@
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
+
 @if (Model.Count != 0)
 {
     <a asp-action="EkleGorev" class="btn btn-sm btn-info my-2">Görev Oluştur</a>
@@ -12,23 +13,23 @@
             <th>Ad</th>
             <th>Aciklama</th>
             <th>Aciliyet</th>
-            <th>OlusturlmaTarihi</th>
+            <th>OlusturulmaTarihi</th>
             <th>islem</th>
 
         </tr>
-      @foreach (var item in Model)
-      {
-          <tr>
-              <td>@item.Ad</td>
-              <td>@item.Aciklama</td>
-              <td>@item.Aciliyet.Tanim</td>
-              <td>@item.OlusturulmaTarih</td>
-              <td>
-                  <a href="">Düzenle</a>
-                  <a href="">Sil</a>
-              </td>
-          </tr>
-      }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Ad</td>
+                <td>@item.Aciklama</td>
+                <td>@item.Aciliyet.Tanim</td>
+                <td>@item.OlusturulmaTarih</td>
+                <td>
+                    <a asp-action="GuncelleGorev" asp-controller="Gorev" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Düzenle</a>
+                    <a href="" data-toggle="modal" data-target="#silmeEkrani" data-mehdi="@item.Id">Sil</a>
+                </td>
+            </tr>
+        }
     </table>
 }
 else
@@ -40,3 +41,56 @@ else
         <a asp-action="EkleGorev" class="btn btn-info btn-sm ">Görev Oluştur</a>
     </div>
 }
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="silmeEkrani" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Uyarı</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Silmek İstediğinizden Emin misiniz?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hayır</button>
+                <button id="btnSil" type="button" class="btn btn-primary">Sil</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/jquery/jquery.min.js"></script>
+<script src="~/lib/twitter-bootstrap/js/bootstrap.bundle.min.js"></script>
+@section JavaScript 
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('silmeEkrani').on("show.bs.modal", function (event) {
+                let tetikleyenelement = $(event.relatedTarget);
+                let id = tetikleyenelement.data("mehdi");
+
+                $("#btnSil").click(function () {
+                    $.ajax({
+                        type: "Get",
+                        url: "./Gorev/SilGorev",
+                        data: { id: id },
+                        dataType: "json",
+                        contentType: "application/json;charset=utf-8;",
+                        success: function () {
+                            //alert("İşlem Tamam");
+                            window.Location.reload();
+                        },
+                        error: function (error) {
+                            alert(error.statusText);
+                        }
+                    })
+                });
+            })
+        });
+       </script>
+}
+
