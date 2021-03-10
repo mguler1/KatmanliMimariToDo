@@ -22,10 +22,13 @@ namespace YSKProje.ToDo.Web
             services.AddScoped<IGorevService, GorevManager>();
             services.AddScoped<IAciliyetService, AciliyetManager>();
             services.AddScoped<IRaporService, RaporManager>();
+            services.AddScoped<IAppUserService, AppUserManager>();
+
 
             services.AddScoped<IGorevDal, EfGorevRepository>();
             services.AddScoped<IAciliyetDal, EfAciliyetRepository>();
             services.AddScoped<IRaporDal, EfRaporRepository>();
+            services.AddScoped<IAppUserDal,EfAppUserRepository>();
 
             services.AddDbContext<TodoContext>();
             services.AddIdentity<AppUser, AppRole>()
