@@ -56,6 +56,8 @@ namespace YSKProje.ToDo.Web
             }
 
             app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
             IdentityInitilaizer.SeedData(userManager,roleManager).Wait();
             app.UseStaticFiles();
 
