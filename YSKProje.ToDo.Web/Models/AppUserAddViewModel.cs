@@ -11,15 +11,18 @@ namespace YSKProje.ToDo.Web.Models
         [Required(ErrorMessage ="Kullanıcı Adı Giriniz")]
         [Display(Name="Kullanıcı Adı")]
         public string UserName { get; set; }
+
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "Şifre Giriniz")]
         [Display(Name = "Şifre")]
         public string Password { get; set; }
+
         [Required(ErrorMessage = "Parolalar eşleşmiyor")]
         [Display(Name = "Şifre Tekrar")]
         [DataType(DataType.Password)]
+        [Compare("Password", ErrorMessage = "Parolalar eşleşmiyor")]
         public string ConfirmPassword { get; set; }
-        [Compare("Password",ErrorMessage = "E-Posta Giriniz")]
+       
         [EmailAddress(ErrorMessage ="Geçersiz Email Adresi")]
         public string Email { get; set; }
         [Required(ErrorMessage = "Ad Giriniz")]
