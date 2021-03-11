@@ -1,0 +1,42 @@
+﻿@model GorevListViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="row">
+    <div class="col-md-4 mt-2">
+        <div class="card-header">
+            <h4 class="text-center lead">Görev Bilgileri</h4>
+        </div>
+            <div class="card-body">
+                <h5 class="card-title">@Model.Ad</h5>
+                <p class="card-text">@Model.Aciklama</p>
+                <p class="card-text"><strong>Aciliyet Durumu: </strong><span class="badge badge-info"> @Model.Aciliyet.Tanim </span></p>
+                <p class="text-center">
+                    <small>@Model.OlusturulmaTarih</small>
+                </p>
+            </div>
+
+        </div>
+    <div class="col-md-8">
+        @foreach (var item in (List<AppUserListViewModel>)ViewBag.Personeller)
+        {
+            <div class="card mb-3">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="..." alt="@item.Name">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Name @item.SurName</h5>
+                            <p class="card-text">Bir Görevi Varmı</p>
+                            <p class="card-text"><small class="text-muted">@item.Email</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+    </div>
+

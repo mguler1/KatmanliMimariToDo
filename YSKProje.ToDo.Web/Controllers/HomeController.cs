@@ -77,7 +77,7 @@ namespace YSKProje.ToDo.Web.Controllers
                  var addroleResult= await _userManager.AddToRoleAsync(user, "Member");
                     if (addroleResult.Succeeded)
                     {
-                        return RedirectToAction("GirisYap");
+                        return RedirectToAction("Index");
                     }
                     foreach (var item in result.Errors)
                     {

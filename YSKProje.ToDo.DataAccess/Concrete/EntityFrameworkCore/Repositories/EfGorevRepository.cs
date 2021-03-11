@@ -12,7 +12,7 @@ namespace YSKProje.ToDo.DataAccess.Concrete.EntityFrameworkCore.Repositories
         public Gorev GetirAciliyetId(int id)
         {
             using var context = new TodoContext();
-            return context.Gorevler.Include(x => x.Aciliyet).FirstOrDefault(x => x.Durum && x.Id == id);
+            return context.Gorevler.Include(x => x.Aciliyet).FirstOrDefault(x => !x.Durum && x.Id == id);
         }
 
         public List<Gorev> GetirAciliyetIleTamamlanmayan()

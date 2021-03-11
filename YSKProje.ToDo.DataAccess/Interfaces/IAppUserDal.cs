@@ -8,5 +8,6 @@ namespace YSKProje.ToDo.DataAccess.Interfaces
     public interface IAppUserDal:IGenericDal<AppUser>
     {
         List<AppUser> GetirAdminOlmayanlar();
+        List<AppUser> GetirAdminOlmayanlar(string aranacakKelime, int aktifSayfa = 1);
     }
 }
