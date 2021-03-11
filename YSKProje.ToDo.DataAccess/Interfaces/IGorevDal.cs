@@ -6,6 +6,8 @@ namespace YSKProje.ToDo.DataAccess.Interfaces
     public interface IGorevDal : IGenericDal<Gorev>
     {
         List<Gorev> GetirAciliyetIleTamamlanmayan();
+        List<Gorev> GetirTumTablolar();
+        Gorev GetirAciliyetId(int id);
       
     }
 }

@@ -9,12 +9,22 @@ namespace YSKProje.ToDo.DataAccess.Concrete.EntityFrameworkCore.Repositories
 {
     public class EfGorevRepository : EfGenericRepository<Gorev>, IGorevDal
     {
+        public Gorev GetirAciliyetId(int id)
+        {
+            using var context = new TodoContext();
+            return context.Gorevler.Include(x => x.Aciliyet).FirstOrDefault(x => x.Durum && x.Id == id);
+        }
+
         public List<Gorev> GetirAciliyetIleTamamlanmayan()
         {
-          using (var context=new TodoContext() )
-            {
-             return  context.Gorevler.Include(x => x.Aciliyet).Where(x => x.Durum == false).OrderByDescending(x=>x.OlusturulmaTarih).ToList();
-            }
+            using var context = new TodoContext();
+            return context.Gorevler.Include(x => x.Aciliyet).Where(x => x.Durum == false).OrderByDescending(x => x.OlusturulmaTarih).ToList();
+        }
+
+        public List<Gorev> GetirTumTablolar()
+        {
+            using var context = new TodoContext();
+            return context.Gorevler.Include(x => x.Aciliyet).Include(x => x.Raporlar).Include(x => x.AppUser).Where(x => x.Durum == false).OrderByDescending(x => x.OlusturulmaTarih).ToList();
         }
     }
 }

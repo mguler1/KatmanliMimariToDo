@@ -16,6 +16,11 @@ namespace YSKProje.ToDo.Business.Concrete
             
         }
 
+        public Gorev GetirAciliyetId(int id)
+        {
+            return _gorevDal.GetirAciliyetId(id);
+        }
+
         public List<Gorev> GetirAciliyetIleTamamlanmayan()
         {
             return _gorevDal.GetirAciliyetIleTamamlanmayan();
@@ -29,6 +34,11 @@ namespace YSKProje.ToDo.Business.Concrete
         public Gorev GetirIdile(int id)
         {
             return _gorevDal.GetirIdile(id);
+        }
+
+        public List<Gorev> GetirTumTablolar()
+        {
+            return _gorevDal.GetirTumTablolar();
         }
 
         public void Guncelle(Gorev tablo)
