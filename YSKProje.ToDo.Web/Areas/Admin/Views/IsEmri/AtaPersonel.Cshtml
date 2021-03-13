@@ -3,11 +3,13 @@
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
-<div class="row">
-    <div class="col-md-4 mt-2">
-        <div class="card-header">
-            <h4 class="text-center lead">Görev Bilgileri</h4>
-        </div>
+<div class="row mt-2">
+    <div class="col-md-4">
+        <div class="card border border-primary ">
+            <div class="card-header">
+                <h4 class="text-center lead">Görev Bilgileri</h4>
+            </div>
+
             <div class="card-body">
                 <h5 class="card-title">@Model.Ad</h5>
                 <p class="card-text">@Model.Aciklama</p>
@@ -16,8 +18,8 @@
                     <small>@Model.OlusturulmaTarih</small>
                 </p>
             </div>
-
         </div>
+    </div>
     <div class="col-md-8">
         @foreach (var item in (List<AppUserListViewModel>)ViewBag.Personeller)
         {
@@ -36,7 +38,17 @@
                 </div>
             </div>
         }
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            @for (int i = 1; i <= ViewBag.ToplamSayfa; i++)
+            {
+                <li class="page-item @(ViewBag.AktifSatfa==i?"active":"")">
+            <a class="page-link" asp-action="AtaPersonel"asp-route-id="@Model.Id"asp-route-sayfa="@i">@i</a>
+                </li>
+            }
 
+        </ul>
+    </nav>
     </div>
     </div>
 

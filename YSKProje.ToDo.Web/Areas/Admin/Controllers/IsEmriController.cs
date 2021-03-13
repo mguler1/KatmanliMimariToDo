@@ -44,8 +44,12 @@ namespace YSKProje.ToDo.Web.Areas.Admin.Controllers
         public IActionResult AtaPersonel(int id,string s,int sayfa=1)
         {
             TempData["Active"] = "isemri";
-            var gorev = _gorevService.GetirAciliyetId(id);
-            var personeller = _appUserService.GetirAdminOlmayanlar(s,sayfa);
+            ViewBag.AktifSayfa =sayfa;
+            //ViewBag.ToplamSayfa =(int) Math.Ceiling((double)_appUserService.GetirAdminOlmayanlar().Count/3);
+            int toplamSayfa;
+            var gorev =_gorevService.GetirAciliyetId(id);
+            var personeller = _appUserService.GetirAdminOlmayanlar(out toplamSayfa,s,sayfa);
+            ViewBag.ToplamSayfa = toplamSayfa;
             List<AppUserListViewModel> appUserListModel = new List<AppUserListViewModel>();
             foreach (var item in personeller)
             {

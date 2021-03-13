@@ -8,6 +8,6 @@ namespace YSKProje.ToDo.Business.Interfaces
     public interface IAppUserService
     {
         List<AppUser> GetirAdminOlmayanlar();
-        List<AppUser> GetirAdminOlmayanlar(string aranacakKelime, int aktifSayfa );
+        List<AppUser> GetirAdminOlmayanlar(out int toplamsayfa, string aranacakKelime, int aktifSayfa = 1);
     }
 }
