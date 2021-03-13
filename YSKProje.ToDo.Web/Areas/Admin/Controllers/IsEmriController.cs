@@ -45,7 +45,8 @@ namespace YSKProje.ToDo.Web.Areas.Admin.Controllers
         {
             TempData["Active"] = "isemri";
             ViewBag.AktifSayfa =sayfa;
-            //ViewBag.ToplamSayfa =(int) Math.Ceiling((double)_appUserService.GetirAdminOlmayanlar().Count/3);
+
+            ViewBag.Aranan = s;
             int toplamSayfa;
             var gorev =_gorevService.GetirAciliyetId(id);
             var personeller = _appUserService.GetirAdminOlmayanlar(out toplamSayfa,s,sayfa);
