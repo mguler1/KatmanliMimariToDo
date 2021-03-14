@@ -73,6 +73,14 @@ namespace YSKProje.ToDo.Web.Areas.Admin.Controllers
             gorevmodel.OlusturulmaTarih = gorev.OlusturulmaTarih;
             return View(gorevmodel);
         }
+        [HttpPost]
+        public IActionResult AtaPersonel(PersonelGorevlendirViewModel model)
+        {
+            var guncellenecekgorev = _gorevService.GetirIdile(model.GorevId);
+            guncellenecekgorev.AppUserId = model.PersonelId;
+            _gorevService.Guncelle(guncellenecekgorev);
+            return RedirectToAction("Index");
+        }
         public IActionResult GorevlendirPersonel(PersonelGorevlendirViewModel model)
         {
             TempData["Active"] = "isemri";
