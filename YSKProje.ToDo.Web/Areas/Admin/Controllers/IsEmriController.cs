@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,21 +12,23 @@ using YSKProje.ToDo.Web.Areas.Admin.Models;
 namespace YSKProje.ToDo.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles ="Admin")]
+    [Authorize(Roles = "Admin")]
     public class IsEmriController : Controller
     {
-      private readonly  IAppUserService _appUserService;
-      private readonly  IGorevService _gorevService;
-        public IsEmriController(IAppUserService appUserService,IGorevService gorevService)
+        private readonly IAppUserService _appUserService;
+        private readonly IGorevService _gorevService;
+        private readonly UserManager<AppUser> _userManager;
+        public IsEmriController(IAppUserService appUserService, IGorevService gorevService, UserManager<AppUser> userManager)
         {
             _appUserService = appUserService;
             _gorevService = gorevService;
+            _userManager = userManager;
         }
         public IActionResult Index()
         {
-            TempData["Active"]="isemri";
+            TempData["Active"] = "isemri";
             //var model= _appUserService.GetirAdminOlmayanlar();
-            List<Gorev> gorevler= _gorevService.GetirTumTablolar();
+            List<Gorev> gorevler = _gorevService.GetirTumTablolar();
             List<GorevListAllViewModel> models = new List<GorevListAllViewModel>();
             foreach (var item in gorevler)
             {
@@ -41,15 +44,15 @@ namespace YSKProje.ToDo.Web.Areas.Admin.Controllers
             }
             return View(models);
         }
-        public IActionResult AtaPersonel(int id,string s,int sayfa=1)
+        public IActionResult AtaPersonel(int id, string s, int sayfa = 1)
         {
             TempData["Active"] = "isemri";
-            ViewBag.AktifSayfa =sayfa;
+            ViewBag.AktifSayfa = sayfa;
 
             ViewBag.Aranan = s;
             int toplamSayfa;
-            var gorev =_gorevService.GetirAciliyetId(id);
-            var personeller = _appUserService.GetirAdminOlmayanlar(out toplamSayfa,s,sayfa);
+            var gorev = _gorevService.GetirAciliyetId(id);
+            var personeller = _appUserService.GetirAdminOlmayanlar(out toplamSayfa, s, sayfa);
             ViewBag.ToplamSayfa = toplamSayfa;
             List<AppUserListViewModel> appUserListModel = new List<AppUserListViewModel>();
             foreach (var item in personeller)
@@ -63,12 +66,34 @@ namespace YSKProje.ToDo.Web.Areas.Admin.Controllers
             }
             ViewBag.Personeller = appUserListModel;
             GorevListViewModel gorevmodel = new GorevListViewModel();
-          gorevmodel.Id = gorev.Id;
+            gorevmodel.Id = gorev.Id;
             gorevmodel.Ad = gorev.Ad;
             gorevmodel.Aciklama = gorev.Aciklama;
             gorevmodel.Aciliyet = gorev.Aciliyet;
             gorevmodel.OlusturulmaTarih = gorev.OlusturulmaTarih;
             return View(gorevmodel);
+        }
+        public IActionResult GorevlendirPersonel(PersonelGorevlendirViewModel model)
+        {
+            TempData["Active"] = "isemri";
+            var user = _userManager.Users.FirstOrDefault(x => x.Id == model.PersonelId);
+            var gorev = _gorevService.GetirAciliyetId(model.GorevId);
+            AppUserListViewModel userModel = new AppUserListViewModel();
+            userModel.Id = user.Id;
+            userModel.Name = user.Name;
+            userModel.SurName = user.Surname;
+            userModel.Email = user.Email;
+
+            GorevListViewModel gorevModel = new GorevListViewModel();
+            gorevModel.Id = gorev.Id;
+            gorevModel.Aciklama = gorev.Aciklama;
+            gorevModel.Aciliyet = gorev.Aciliyet;
+            gorevModel.Ad = gorev.Ad;
+
+            PersonelGorevlendirListViewModel personelGorevlendirModel = new PersonelGorevlendirListViewModel();
+            personelGorevlendirModel.AppUser = userModel;
+            personelGorevlendirModel.Gorev = gorevModel;
+            return View(personelGorevlendirModel);
         }
     }
 }

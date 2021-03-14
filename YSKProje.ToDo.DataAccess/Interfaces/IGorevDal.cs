@@ -8,6 +8,7 @@ namespace YSKProje.ToDo.DataAccess.Interfaces
         List<Gorev> GetirAciliyetIleTamamlanmayan();
         List<Gorev> GetirTumTablolar();
         Gorev GetirAciliyetId(int id);
+        List<Gorev> GetirileAppUserId(int appuserId);
       
     }
 }

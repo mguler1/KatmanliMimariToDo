@@ -49,9 +49,9 @@
                     <div class="col-md-8">
                         <div class="card-body">
                             <h5 class="card-title">@item.Name @item.SurName</h5>
-                            <p class="card-text">Bir Görevi Varmı</p>
+                            <p class="card-text"><getirGorevAppUserId app-user-id="@item.Id"></getirGorevAppUserId></p>
                             <p class="card-text"><small class="text-muted">@item.Email</small>
-                            <a class="btn btn-primary btn-sm float-right" >Görevlendir</a>
+                            <a asp-action="GorevlendirPersonel"asp-route-PersonelId="@item.Id" asp-route-GorevId="@Model.Id" class="btn btn-primary btn-sm float-right" >Görevlendir</a>
                             </p>
                         </div>
                     </div>

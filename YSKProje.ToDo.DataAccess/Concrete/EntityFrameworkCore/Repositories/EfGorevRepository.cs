@@ -21,6 +21,12 @@ namespace YSKProje.ToDo.DataAccess.Concrete.EntityFrameworkCore.Repositories
             return context.Gorevler.Include(x => x.Aciliyet).Where(x => x.Durum == false).OrderByDescending(x => x.OlusturulmaTarih).ToList();
         }
 
+        public List<Gorev> GetirileAppUserId(int appuserId)
+        {
+            using var context = new TodoContext();
+            return context.Gorevler.Where(x => x.AppUserId == appuserId).ToList();
+        }
+
         public List<Gorev> GetirTumTablolar()
         {
             using var context = new TodoContext();
