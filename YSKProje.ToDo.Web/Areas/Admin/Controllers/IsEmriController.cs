@@ -103,5 +103,16 @@ namespace YSKProje.ToDo.Web.Areas.Admin.Controllers
             personelGorevlendirModel.Gorev = gorevModel;
             return View(personelGorevlendirModel);
         }
+        public IActionResult Detaylandir(int id)
+        {
+          var gorev=  _gorevService.GetirRaporlarIdIle(id);
+            GorevListAllViewModel model = new GorevListAllViewModel();
+            model.Id = gorev.Id;
+            model.Raporlar = gorev.Raporlar;
+            model.Ad = gorev.Ad;
+            model.Aciklama = gorev.Aciklama;
+            model.AppUser = gorev.AppUser;
+            return View(model);
+        }
     }
 }
