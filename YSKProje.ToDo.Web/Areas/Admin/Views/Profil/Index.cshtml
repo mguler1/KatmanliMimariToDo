@@ -3,7 +3,8 @@
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
-<form class="w-75 mx-auto p-3">
+<form asp-action="Index" class="w-75 mx-auto p-3" method="post">
+    <input type="hidden" asp-for="Id" />
     <div class="form-group">
         <label asp-for="Name"></label>
         <span asp-validation-for="Name" class="text-danger"></span>
@@ -19,5 +20,5 @@
         <span asp-validation-for="Email" class="text-danger"></span>
         <input asp-for="Email" class="form-control" />
     </div>
-    <button type="submit"class="btn btn bg-info btn-sm"><i class="fa fa-check"></i> Kaydet</button>
+    <button type="submit" class="btn btn bg-info btn-sm"><i class="fa fa-check"></i> Kaydet</button>
 </form>
