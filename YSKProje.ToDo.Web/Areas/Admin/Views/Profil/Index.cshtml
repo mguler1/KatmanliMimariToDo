@@ -1,0 +1,23 @@
+﻿@model AppUserListViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<form class="w-75 mx-auto p-3">
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <span asp-validation-for="Name" class="text-danger"></span>
+        <input asp-for="Name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="SurName"></label>
+        <span asp-validation-for="SurName" class="text-danger"></span>
+        <input asp-for="SurName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <span asp-validation-for="Email" class="text-danger"></span>
+        <input asp-for="Email" class="form-control" />
+    </div>
+    <button type="submit"class="btn btn bg-info btn-sm"><i class="fa fa-check"></i> Kaydet</button>
+</form>
