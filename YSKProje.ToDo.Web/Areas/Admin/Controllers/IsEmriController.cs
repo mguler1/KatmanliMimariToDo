@@ -18,11 +18,13 @@ namespace YSKProje.ToDo.Web.Areas.Admin.Controllers
         private readonly IAppUserService _appUserService;
         private readonly IGorevService _gorevService;
         private readonly UserManager<AppUser> _userManager;
-        public IsEmriController(IAppUserService appUserService, IGorevService gorevService, UserManager<AppUser> userManager)
+        private readonly IDosyaService _dosyaService;
+        public IsEmriController(IAppUserService appUserService, IGorevService gorevService, UserManager<AppUser> userManager, IDosyaService dosyaService)
         {
             _appUserService = appUserService;
             _gorevService = gorevService;
             _userManager = userManager;
+            _dosyaService = dosyaService;
         }
         public IActionResult Index()
         {
@@ -106,7 +108,7 @@ namespace YSKProje.ToDo.Web.Areas.Admin.Controllers
         public IActionResult Detaylandir(int id)
         {
             TempData["Active"] = "isemri";
-            var gorev=  _gorevService.GetirRaporlarIdIle(id);
+            var gorev = _gorevService.GetirRaporlarIdIle(id);
             GorevListAllViewModel model = new GorevListAllViewModel();
             model.Id = gorev.Id;
             model.Raporlar = gorev.Raporlar;
@@ -114,6 +116,17 @@ namespace YSKProje.ToDo.Web.Areas.Admin.Controllers
             model.Aciklama = gorev.Aciklama;
             model.AppUser = gorev.AppUser;
             return View(model);
+        }
+        public IActionResult GeitrExcel(int id)
+        {
+
+            return File(_dosyaService.AktarExcel(_gorevService.GetirRaporlarIdIle(id).Raporlar), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", Guid.NewGuid() + ".xlsx");
+        }
+        public IActionResult GeitrPdf(int id)
+        {
+            var path = _dosyaService.AktarPdf(_gorevService.GetirRaporlarIdIle(id).Raporlar);
+            return File(path,"application/pdf",Guid.NewGuid()+".pdf");
+
         }
     }
 }
