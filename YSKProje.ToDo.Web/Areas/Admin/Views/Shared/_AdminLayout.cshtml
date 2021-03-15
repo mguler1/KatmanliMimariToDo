@@ -23,7 +23,7 @@
     <link href="~/lib/bootswatch/bootstrap.min.css" rel="stylesheet" />
     <!-- Custom styles for this template -->
     <link href="~/lib/template-css/simple-sidebar.css" rel="stylesheet" />
-
+    <link href="~/lib/fontAwesome/css/all.min.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -34,12 +34,12 @@
         <div class="border-right" id="sidebar-wrapper">
             <div class="sidebar-heading">Admin Layout</div>
             <div class="list-group list-group-flush">
-                <a asp-action="Index"asp-controller="Gorev" class="list-group-item list-group-item-action  @(active=="gorev"?"active":"")"> Görev İşlemleri</a>
-                <a asp-action="Index" asp-controller="Aciliyet" class="list-group-item list-group-item-action @(active=="aciliyet"?"active":"") ">Aciliyet İşlemleri</a>
-                <a asp-action="Index"asp-controller="IsEmri" class="list-group-item list-group-item-action  @(active=="isemri"?"active":"") ">İş Emri </a>
-                <a href="#" class="list-group-item list-group-item-action  @(active=="gorevatama"?"active":"")">Görev Atama</a>
-                <a href="#" class="list-group-item list-group-item-action ">Profile</a>
-                <a href="#" class="list-group-item list-group-item-action ">Status</a>
+                <a asp-action="Index"asp-controller="Gorev" class="list-group-item list-group-item-action  @(active=="gorev"?"active":"")"><i class="fas fa-tasks"></i>  Görev İşlemleri</a>
+                <a asp-action="Index" asp-controller="Aciliyet" class="list-group-item list-group-item-action @(active=="aciliyet"?"active":"") "><i class="fas fa-exclamation"></i> Aciliyet İşlemleri</a>
+                <a asp-action="Index"asp-controller="IsEmri" class="list-group-item list-group-item-action  @(active=="isemri"?"active":"") "> <i class="fas fa-file"></i> İş Emri </a>
+                <a href="#" class="list-group-item list-group-item-action "><i class="fas fa-chart-pie"></i> Grafikler</a>
+                <a href="#" class="list-group-item list-group-item-action "><i class="fas fa-chart-area"></i> İstatistikler</a>
+                <a href="#" class="list-group-item list-group-item-action "><i class="fas fa-sign-out-alt"></i> Çıkış Yap</a>
             </div>
         </div>
         <!-- /#sidebar-wrapper -->
@@ -77,7 +77,7 @@
             </nav>
 
             <div class="container-fluid">
-
+                <script src="~/lib/fontAwesome/js/all.min.js"></script>
                 @RenderBody()
             </div>
         </div>
