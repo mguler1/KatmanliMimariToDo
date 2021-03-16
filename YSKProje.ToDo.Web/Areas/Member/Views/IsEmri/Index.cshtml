@@ -1,6 +1,6 @@
 ﻿@using YSKProje.ToDo.Web.Areas.Admin.Models
 @model List<GorevListAllViewModel>
-
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Member/Views/Shared/_MemberLayout.cshtml";
@@ -26,32 +26,33 @@
                 }
                 else
                 {
-                    <a class="btn btn-light btn-sm">Rapor Yaz</a>
+                    <a asp-action="EkleRapor"asp-route-id="@gorev.Id" class="btn btn-light btn-sm"><i class=" fas fa-plus-circle"></i> Rapor Yaz</a>
                 }
 
                 <a href="#" class="btn btn-dark btn-sm"><i class=""></i>Tamamlandı</a>
             </p>
             <div class="collapse" id="collapseExample-@index">
-               
-                    <table class=" table table-bordered table-sm" >
+                <a asp-action="EkleRapor" asp-route-id="@gorev.Id" class="btn btn-light btn-sm"><i class=" fas fa-plus-circle"></i> Rapor Yaz</a>
+                <br />
+                <table class=" table table-bordered table-sm">
+                    <tr>
+                        <th>Tanım</th>
+                        <th>Açıklama</th>
+                        <th>İşlem</th>
+                    </tr>
+                    @foreach (var rapor in gorev.Raporlar)
+                    {
                         <tr>
-                            <th>Tanım</th>
-                            <th>Açıklama</th>
-                            <th>İşlem</th>
+                            <td>@rapor.Tanim</td>
+                            <td>@rapor.Detay</td>
+                            <td> <a asp-action="GuncelleRapor"asp-route-id="@rapor.Id" class="btn btn-warning btn-sm">Düzenle</a></td>
                         </tr>
-                        @foreach (var rapor in gorev.Raporlar)
-                        {
-                            <tr>
-                                <td>@rapor.Tanim</td>
-                                <td>@rapor.Detay</td>
-                                <td> <a href="">Düzenle</a></td>
-                            </tr>
-                        }
-                    </table>
-                </div>
+                    }
+                </table>
             </div>
-   
-           
         </div>
- 
+
+
+    </div>
+
 }
