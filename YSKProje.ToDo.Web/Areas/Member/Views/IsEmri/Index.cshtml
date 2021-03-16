@@ -1,0 +1,19 @@
+﻿@using YSKProje.ToDo.Web.Areas.Admin.Models
+@model List<GorevListAllViewModel>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Member/Views/Shared/_MemberLayout.cshtml";
+}
+@foreach (var gorev in Model)
+{
+<div class="card">
+    <input  type="hidden" @gorev.Id/>
+    <h5 class="card-header">@gorev.Ad</h5>
+    <div class="card-body">
+        <h5 class="card-title">@gorev.Aciliyet.Tanim</h5>
+        <p class="card-text">@gorev.Aciklama</p>
+        <a href="#" class="btn btn-primary">Raporlara Git  <span class="badge badge-pill">@gorev.Raporlar.Count</span></a>
+        <a href="#" class="btn btn-primary">Tamamlandı</a>
+    </div>
+</div>
+}

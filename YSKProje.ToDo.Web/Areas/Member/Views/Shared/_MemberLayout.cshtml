@@ -1,10 +1,12 @@
-﻿@{
+﻿
+@*@model AppUserListViewModel*@
+@{
     string active = string.Empty;
     if (TempData["Active"] != null)
     {
         active = TempData["Active"].ToString();
     }
-    //string active2 = TempData["Active"]?.ToString();
+
 }
 
 <!DOCTYPE html>

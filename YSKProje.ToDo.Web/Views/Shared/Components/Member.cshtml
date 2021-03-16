@@ -1,4 +1,5 @@
-﻿@{
+﻿
+@{
     string active = string.Empty;
     if (TempData["Active"] != null)
     {
@@ -34,7 +35,7 @@
         <div class="border border-primary border-left-0 border-top-0 border border-bottom-0 border-right" id="sidebar-wrapper">
             <div class="sidebar-heading">Admin Layout</div>
             <div class="list-group list-group-flush">
-                <a asp-action="Index" asp-controller="IsEmri" class="list-group-item list-group-item-action  @(active=="isemri"?"active":"") "> <i class="fas fa-file"></i> Gelen İşler </a>
+                <a asp-action="Index" asp-controller="IsEmri"  class="list-group-item list-group-item-action  @(active=="isemri"?"active":"") "> <i class="fas fa-file"></i> Gelen İşler </a>
                 <a class="list-group-item list-group-item-action  @(active=="profil"?"active":"") "><i class="fas fa-chart-pie"></i> Tamamlanan İşler</a>
                 <a href="#" class="list-group-item list-group-item-action "><i class="fas fa-chart-area"></i> İstatistikler</a>
                 <a href="#" class="list-group-item list-group-item-action "><i class="fas fa-bell"></i> Bildirimlerim</a>
