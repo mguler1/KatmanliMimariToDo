@@ -1,0 +1,25 @@
+﻿@using YSKProje.ToDo.Web.Areas.Admin.Models
+@model AppUserListViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Member/Views/Shared/_MemberLayout.cshtml";
+}
+<form asp-action="Index" class="w-75 mx-auto p-3" method="post">
+    <input type="hidden" asp-for="Id" />
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <span asp-validation-for="Name" class="text-danger"></span>
+        <input asp-for="Name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="SurName"></label>
+        <span asp-validation-for="SurName" class="text-danger"></span>
+        <input asp-for="SurName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <span asp-validation-for="Email" class="text-danger"></span>
+        <input asp-for="Email" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn bg-info btn-sm"><i class="fa fa-check"></i> Kaydet</button>
+</form>
