@@ -117,16 +117,15 @@ namespace YSKProje.ToDo.Web.Areas.Admin.Controllers
             model.AppUser = gorev.AppUser;
             return View(model);
         }
-        public IActionResult GeitrExcel(int id)
+           public IActionResult GetirExcel(int id)
         {
-
             return File(_dosyaService.AktarExcel(_gorevService.GetirRaporlarIdIle(id).Raporlar), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", Guid.NewGuid() + ".xlsx");
         }
-        public IActionResult GeitrPdf(int id)
+
+        public IActionResult GetirPdf(int id)
         {
             var path = _dosyaService.AktarPdf(_gorevService.GetirRaporlarIdIle(id).Raporlar);
-            return File(path,"application/pdf",Guid.NewGuid()+".pdf");
-
+            return File(path, "application/pdf", Guid.NewGuid() + ".pdf");
         }
     }
 }
