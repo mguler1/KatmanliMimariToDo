@@ -47,8 +47,28 @@ namespace YSKProje.ToDo.Web.Areas.Member.Controllers
         public IActionResult EkleRapor(int id)
         {
             TempData["Active"] = "isemri";
+           var gorev= _gorevService.GetirAciliyetId(id);
             RaporAddViewModel model = new RaporAddViewModel();
             model.GorevId = id;
+            model.Gorev = gorev;
+            return View(model);
+        }
+        [HttpPost]
+        public IActionResult EkleRapor(RaporAddViewModel model)
+        {
+            TempData["Active"] = "isemri";
+            if (ModelState.IsValid)
+            {
+                _raporService.Kaydet(new Rapor()
+                {
+
+                    GorevId = model.GorevId,
+                    Detay = model.Detay,
+                    Tanim=model.Tanim
+                });
+                return RedirectToAction("Index");
+            }
+          
             return View(model);
         }
     }
