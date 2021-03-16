@@ -1,0 +1,35 @@
+﻿@model AppUserListViewModel
+
+@{
+    string active = string.Empty;
+    if (TempData["Active"] != null)
+    {
+        active = TempData["Active"].ToString();
+    }
+
+    //string active2 = TempData["Active"]?.ToString();
+}
+
+
+<div class="border border-right " id="sidebar-wrapper">
+    <div class="sidebar-heading">
+
+        Member
+
+    </div>
+    <div class="list-group list-group-flush">
+        <a asp-action="Index" asp-controller="Isemri"asp-route-id="@Model.Id" class="list-group-item list-group-item-action @(active=="gorev"?"active":"")"><i class="fas fa-arrow-alt-circle-down mr-2"></i> Gelen Görevler</a>
+        <a asp-action="Index" asp-controller="Aciliyet" class="list-group-item list-group-item-action  @(active=="aciliyet"?"active":"")"> <i class="fas fa-arrow-alt-circle-up mr-2"></i>Tamamlanan Görevler </a>
+       
+        <a href="#" class="list-group-item list-group-item-action "> <i class="far fa-bell mr-2"></i>Bildirimler</a>
+
+        <a asp-action="Index" asp-controller="Profil" class="list-group-item list-group-item-action @(active=="profil"?"active":"")">
+            <i class="fas fa-user mr-2"></i>
+            Profilim
+        </a>
+        <a asp-area="" asp-action="CikisYap" asp-controller="Home" class="list-group-item list-group-item-action ">
+            <i class="fas fa-sign-out-alt mr-2"></i>
+            Çıkış Yap
+        </a>
+    </div>
+</div>
