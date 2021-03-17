@@ -6,10 +6,9 @@ namespace YskProje.Todo.DTO.DTOs.GorevDto
 {
    public class GorevAddDto
     {
-        //[Required(ErrorMessage = "Lütfen bir ad giriniz")]
+      
         public string Ad { get; set; }
         public string Aciklama { get; set; }
-        //[Range(0, int.MaxValue, ErrorMessage = "Lütfen bir aciliyet durumu seçiniz")]
         public int AciliyetId { get; set; }
     }
 }
