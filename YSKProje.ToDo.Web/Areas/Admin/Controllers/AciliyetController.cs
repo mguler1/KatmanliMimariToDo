@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using YskProje.Todo.DTO.DTOs.AciliyetDto;
 using YSKProje.ToDo.Business.Interfaces;
 using YSKProje.ToDo.Entities.Concrete;
 using YSKProje.ToDo.Web.Areas.Admin.Models;
@@ -15,32 +17,24 @@ namespace YSKProje.ToDo.Web.Areas.Admin.Controllers
     public class AciliyetController : Controller
     {
        private readonly IAciliyetService _aciliyetService;
-        public AciliyetController(IAciliyetService aciliyetService)
+        private readonly IMapper _mapper;
+        public AciliyetController(IAciliyetService aciliyetService, IMapper mapper)
         {
          _aciliyetService = aciliyetService;
+            _mapper = mapper;
         }
         public IActionResult Index()
         {
-            TempData["Active"] = "aciliyet";
-            List<Aciliyet> aciliyetler = _aciliyetService.GetirHepsi();
-
-            List<AciliyetListViewModel> model = new List<AciliyetListViewModel>();
-            foreach (var item in aciliyetler)
-            {
-                AciliyetListViewModel aciliyetmodel = new AciliyetListViewModel();
-                aciliyetmodel.Id = item.Id;
-                aciliyetmodel.Tanim = item.Tanim;
-                model.Add(aciliyetmodel);
-            }
-            return View(model);
+            TempData["Active"] = "aciliyet";  
+            return View(_mapper.Map<List<AciliyetListDto>>(_aciliyetService.GetirHepsi()));
         }
         public IActionResult EkleAciliyet()
         {
             TempData["Active"] = "aciliyet";
-            return View(new AciliyetAddViewModel());
+            return View(new AciliyetAddDto());
         }
         [HttpPost]
-        public IActionResult EkleAciliyet(AciliyetAddViewModel model)
+        public IActionResult EkleAciliyet(AciliyetAddDto model)
         {
             TempData["Active"] = "aciliyet";
             if (ModelState.IsValid)
@@ -56,16 +50,10 @@ namespace YSKProje.ToDo.Web.Areas.Admin.Controllers
         public IActionResult GuncelleAciliyet(int id)
         {
             TempData["Active"] = "aciliyet";
-            var aciliyet= _aciliyetService.GetirIdile(id);
-            AciliyetUpdateViewModel model = new AciliyetUpdateViewModel
-            {
-                Id = aciliyet.Id,
-                Tanim = aciliyet.Tanim
-            };
-            return View(model);
+            return View(_mapper.Map<AciliyetUpdateDto>(_aciliyetService.GetirIdile(id)));
         }
         [HttpPost]
-        public IActionResult GuncelleAciliyet(AciliyetUpdateViewModel model)
+        public IActionResult GuncelleAciliyet(AciliyetUpdateDto model)
         {
             TempData["Active"] = "aciliyet";
             if (ModelState.IsValid)
