@@ -53,5 +53,12 @@ namespace YSKProje.ToDo.DataAccess.Concrete.EntityFrameworkCore.Repositories
             toplamSayfa =(int)Math.Ceiling((double)returnValue.Count() / 3);
             return returnValue.Skip((aktifSayfa - 1) * 4).Take(4).ToList();
         }
+
+        public int GorevSayisiTamamlananAppUserId(int id)
+        {
+            using var context = new TodoContext();
+           return  context.Gorevler.Count(x => x.AppUserId == id && x.Durum);
+           
+        }
     }
 }

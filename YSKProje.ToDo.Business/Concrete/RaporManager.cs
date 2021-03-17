@@ -42,6 +42,11 @@ namespace YSKProje.ToDo.Business.Concrete
             _raporDal.Kaydet(tablo);
         }
 
+        public int RaporSayisiAppUserId(int id)
+        {
+          return  _raporDal.RaporSayisiAppUserId(id);
+        }
+
         public void Sil(Rapor tablo)
         {
             _raporDal.Sil(tablo);

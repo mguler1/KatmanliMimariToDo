@@ -18,9 +18,11 @@
 
     </div>
     <div class="list-group list-group-flush">
+        <a asp-action="Index" asp-controller="Home" class="list-group-item list-group-item-action @(active=="anasayfa"?"active":"")"><i class="fas fa-arrow-alt-circle-down mr-2"></i> Anasayfa</a>
+
         <a asp-action="Index" asp-controller="Isemri" class="list-group-item list-group-item-action @(active=="isemri"?"active":"")"><i class="fas fa-arrow-alt-circle-down mr-2"></i> Gelen Görevler</a>
         <a asp-action="Index" asp-controller="Gorev" class="list-group-item list-group-item-action  @(active=="gorev"?"active":"")"> <i class="fas fa-arrow-alt-circle-up mr-2"></i>Tamamlanan Görevler </a>
-       
+
         <a href="#" class="list-group-item list-group-item-action "> <i class="far fa-bell mr-2"></i>Bildirimler</a>
 
         <a asp-action="Index" asp-controller="Profil" class="list-group-item list-group-item-action @(active=="profil"?"active":"")">

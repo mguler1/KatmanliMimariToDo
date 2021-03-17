@@ -63,6 +63,11 @@ namespace YSKProje.ToDo.Business.Concrete
             return _gorevDal.GetirTumTablolarlaTamamlanmayan(out toplamSayfa,userId,aktifSayfa);
         }
 
+        public int GorevSayisiTamamlananAppUserId(int id)
+        {
+            return _gorevDal.GorevSayisiTamamlananAppUserId(id);
+        }
+
         public void Guncelle(Gorev tablo)
         {
             _gorevDal.Guncelle(tablo);

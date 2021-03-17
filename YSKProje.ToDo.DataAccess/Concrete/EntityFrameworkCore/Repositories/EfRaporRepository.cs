@@ -16,5 +16,12 @@ namespace YSKProje.ToDo.DataAccess.Concrete.EntityFrameworkCore.Repositories
             using var context = new TodoContext();
             return context.Raporlar.Include(x => x.Gorev).ThenInclude(x=>x.Aciliyet).Where(x => x.Id == id).FirstOrDefault();
         }
+
+        public int RaporSayisiAppUserId(int id)
+        {
+            using var context = new TodoContext();
+          var result=  context.Gorevler.Include(x => x.Raporlar).Where(x => x.AppUserId == id);
+         return  result.SelectMany(x => x.Raporlar).Count();
+        }
     }
 }

@@ -3,6 +3,20 @@
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Member/Views/Shared/_MemberLayout.cshtml";
 }
+<div class="col-md-6">
+    <div class="card text-white bg-primary mb-3 mt-2" style="max-width: 20rem;">
 
-<h1>Index</h1>
+        <div class="card-body">
+            <h4 class="card-title">Rapor Sayısı</h4>
+            <p class="card-text display-4">@ViewBag.RaporSayisi</p>
+        </div>
+    </div>
 
+    <div class="card text-white bg-primary mb-3 mt-2" style="max-width: 20rem;">
+
+        <div class="card-body">
+            <h4 class="card-title">Tamamlanan Görev Sayısı</h4>
+            <p class="card-text display-4">@ViewBag.TamamlananGorevSayisi</p>
+        </div>
+    </div>
+</div>
