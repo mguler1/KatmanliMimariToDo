@@ -213,9 +213,6 @@ namespace YSKProje.ToDo.DataAccess.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Picture")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -241,6 +238,32 @@ namespace YSKProje.ToDo.DataAccess.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("YSKProje.ToDo.Entities.Concrete.Bildirim", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Aciklama")
+                        .IsRequired()
+                        .HasColumnType("ntext");
+
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Durum")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.ToTable("Bildirimler");
                 });
 
             modelBuilder.Entity("YSKProje.ToDo.Entities.Concrete.Gorev", b =>
@@ -354,6 +377,15 @@ namespace YSKProje.ToDo.DataAccess.Migrations
                     b.HasOne("YSKProje.ToDo.Entities.Concrete.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("YSKProje.ToDo.Entities.Concrete.Bildirim", b =>
+                {
+                    b.HasOne("YSKProje.ToDo.Entities.Concrete.AppUser", "AppUser")
+                        .WithMany("Bildirimler")
+                        .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
