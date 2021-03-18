@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using YskProje.Todo.DTO.DTOs.AppUserDto;
 using YSKProje.ToDo.Entities.Concrete;
 using YSKProje.ToDo.Web.Areas.Admin.Models;
 
@@ -15,20 +17,16 @@ namespace YSKProje.ToDo.Web.Areas.Admin.Controllers
     public class ProfilController : Controller
     {
       private readonly  UserManager<AppUser> _userManager;
-        public ProfilController(UserManager<AppUser> userManager)
+        private readonly IMapper _mapper;
+        public ProfilController(UserManager<AppUser> userManager,IMapper mapper)
         {
             _userManager = userManager;
+            _mapper = mapper;
         }
         public async Task< IActionResult> Index()
         {
             TempData["Active"] = "profil";
-            var appuser= await  _userManager.FindByNameAsync(User.Identity.Name);
-            AppUserListViewModel model = new AppUserListViewModel();
-            model.Id = appuser.Id;
-            model.Name = appuser.Name;
-            model.SurName = appuser.Surname;
-            model.Email = appuser.Email;
-            return View(model);
+            return View(_mapper.Map<AppUserListDto>(await _userManager.FindByNameAsync(User.Identity.Name)));
         }
         [HttpPost]
         public async Task<IActionResult> Index(AppUserListViewModel model)
