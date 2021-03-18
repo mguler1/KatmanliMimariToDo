@@ -11,7 +11,7 @@ namespace YSKProje.ToDo.Business.ValidationRules.FluentValidation
         public GorevUpdateValidator()
         {
             RuleFor(x => x.Ad).NotNull().WithMessage("Ad Boş Geçilemez");
-            RuleFor(x => x.AciliyetId).ExclusiveBetween(1, int.MaxValue).WithMessage("Bir Durum Seçiniz");
+            RuleFor(x => x.AciliyetId).ExclusiveBetween(0, int.MaxValue).WithMessage("Bir Durum Seçiniz");
         }
     }
 }
