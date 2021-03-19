@@ -29,11 +29,8 @@ namespace YSKProje.ToDo.Web.Areas.Member.Controllers
         public async Task< IActionResult> Index(int aktifSatfa=1)
         {
             TempData["Active"] = "gorev";
-            var user=  await _userManager.FindByNameAsync(User.Identity.Name);
-            int toplamsayfa;
-         
-           
-           var gorevler= _mapper.Map<List<GorevAllListDto>>(_gorevService.GetirTumTablolarlaTamamlanmayan(out toplamsayfa, user.Id, aktifSatfa));
+            var user=  await _userManager.FindByNameAsync(User.Identity.Name);  
+           var gorevler= _mapper.Map<List<GorevAllListDto>>(_gorevService.GetirTumTablolarlaTamamlanmayan(out int  toplamsayfa, user.Id, aktifSatfa));
             ViewBag.ToplamSayfa = toplamsayfa;
             ViewBag.AktifSayfa = aktifSatfa;
             return View(gorevler);
