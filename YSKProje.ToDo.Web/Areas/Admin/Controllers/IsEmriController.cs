@@ -11,24 +11,22 @@ using YskProje.Todo.DTO.DTOs.GorevDto;
 using YskProje.Todo.DTO.DTOs.PersonelDto;
 using YSKProje.ToDo.Business.Interfaces;
 using YSKProje.ToDo.Entities.Concrete;
-
+using YSKProje.ToDo.Web.Controllers;
 
 namespace YSKProje.ToDo.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = "Admin")]
-    public class IsEmriController : Controller
+    public class IsEmriController : BaseIdentityController
     {
         private readonly IAppUserService _appUserService;
         private readonly IGorevService _gorevService;
-        private readonly UserManager<AppUser> _userManager;
         private readonly IDosyaService _dosyaService;
         private readonly IMapper _mapper;
-        public IsEmriController(IAppUserService appUserService, IGorevService gorevService, UserManager<AppUser> userManager, IDosyaService dosyaService, IMapper mapper)
+        public IsEmriController(IAppUserService appUserService, IGorevService gorevService, UserManager<AppUser> userManager, IDosyaService dosyaService, IMapper mapper):base(userManager)
         {
             _appUserService = appUserService;
             _gorevService = gorevService;
-            _userManager = userManager;
             _dosyaService = dosyaService;
             _mapper = mapper;
         }

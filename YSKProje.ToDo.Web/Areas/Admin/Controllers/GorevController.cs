@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using YskProje.Todo.DTO.DTOs.GorevDto;
 using YSKProje.ToDo.Business.Interfaces;
 using YSKProje.ToDo.Entities.Concrete;
-
+using YSKProje.ToDo.Web.Controllers;
 
 namespace YSKProje.ToDo.Web.Areas.Admin.Controllers
 {

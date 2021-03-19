@@ -8,25 +8,25 @@ using System.Linq;
 using System.Threading.Tasks;
 using YskProje.Todo.DTO.DTOs.AppUserDto;
 using YSKProje.ToDo.Entities.Concrete;
-
+using YSKProje.ToDo.Web.Controllers;
 
 namespace YSKProje.ToDo.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = "Admin")]
-    public class ProfilController : Controller
+    public class ProfilController : BaseIdentityController
     {
-      private readonly  UserManager<AppUser> _userManager;
+    
         private readonly IMapper _mapper;
-        public ProfilController(UserManager<AppUser> userManager,IMapper mapper)
+        public ProfilController(UserManager<AppUser> userManager,IMapper mapper):base(userManager)
         {
-            _userManager = userManager;
+           
             _mapper = mapper;
         }
         public async Task< IActionResult> Index()
         {
             TempData["Active"] = "profil";
-            return View(_mapper.Map<AppUserListDto>(await _userManager.FindByNameAsync(User.Identity.Name)));
+            return View(_mapper.Map<AppUserListDto>(await GirisYapanKullanici()));
         }
         [HttpPost]
         public async Task<IActionResult> Index(AppUserListDto model)
