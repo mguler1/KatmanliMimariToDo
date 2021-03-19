@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using YskProje.Todo.DTO.DTOs.AppUserDto;
 using YSKProje.ToDo.Entities.Concrete;
-using YSKProje.ToDo.Web.Areas.Admin.Models;
+
 
 namespace YSKProje.ToDo.Web.Areas.Member.Controllers
 {

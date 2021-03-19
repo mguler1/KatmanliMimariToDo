@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using YskProje.Todo.DTO.DTOs.AppUserDto;
 using YSKProje.ToDo.Entities.Concrete;
-using YSKProje.ToDo.Web.Areas.Admin.Models;
+
 
 namespace YSKProje.ToDo.Web.Areas.Admin.Controllers
 {
@@ -29,7 +29,7 @@ namespace YSKProje.ToDo.Web.Areas.Admin.Controllers
             return View(_mapper.Map<AppUserListDto>(await _userManager.FindByNameAsync(User.Identity.Name)));
         }
         [HttpPost]
-        public async Task<IActionResult> Index(AppUserListViewModel model)
+        public async Task<IActionResult> Index(AppUserListDto model)
         {
             if (ModelState.IsValid)
             {

@@ -4,8 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using YskProje.Todo.DTO.DTOs.AppUserDto;
 using YSKProje.ToDo.Entities.Concrete;
-using YSKProje.ToDo.Web.Areas.Admin.Models;
+
 
 namespace YSKProje.ToDo.Web.ViewComponents
 {
@@ -20,7 +21,7 @@ namespace YSKProje.ToDo.Web.ViewComponents
         {
 
             var user = _userManager.FindByNameAsync(User.Identity.Name).Result;
-            AppUserListViewModel model = new AppUserListViewModel();
+            AppUserListDto model = new AppUserListDto();
             model.Id = user.Id;
             model.Name = user.Name;
             model.SurName = user.Surname;
