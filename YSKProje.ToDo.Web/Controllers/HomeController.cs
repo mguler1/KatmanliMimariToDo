@@ -14,14 +14,16 @@ namespace YSKProje.ToDo.Web.Controllers
 {
     public class HomeController : Controller
     {
-       private readonly IGorevService _gorevService;
-       private readonly UserManager<AppUser> _userManager;
+        private readonly IGorevService _gorevService;
+        private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
-        public HomeController(IGorevService gorevService, UserManager<AppUser> userManager,SignInManager<AppUser> signInManager)
+        private readonly ICustomLogger _customLogger;
+        public HomeController(IGorevService gorevService, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,ICustomLogger customLogger)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _gorevService = gorevService;
+            _customLogger = customLogger;
         }
 
         public IActionResult Index()
@@ -33,14 +35,14 @@ namespace YSKProje.ToDo.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-             var user=  await _userManager.FindByNameAsync(model.UserName);
-                if (user!=null)
+                var user = await _userManager.FindByNameAsync(model.UserName);
+                if (user != null)
                 {
-                var identityResult=  await  _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
+                    var identityResult = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
                     if (identityResult.Succeeded)
                     {
-                      var roller= await _userManager.GetRolesAsync(user);
-                      
+                        var roller = await _userManager.GetRolesAsync(user);
+
                         if (roller.Contains("Admin"))
                         {
                             return RedirectToAction("Index", "Home", new { area = "Admin" });
@@ -53,7 +55,7 @@ namespace YSKProje.ToDo.Web.Controllers
                 }
                 ModelState.AddModelError("", "Kullanıcı Adı veya Şifre Hatalı");
             }
-            return View("Index",model);
+            return View("Index", model);
         }
         public IActionResult KayitOl()
         {
@@ -61,7 +63,7 @@ namespace YSKProje.ToDo.Web.Controllers
         }
 
         [HttpPost]
-        public async Task< IActionResult> KayitOl(AppUserAddDto model)
+        public async Task<IActionResult> KayitOl(AppUserAddDto model)
         {
             if (ModelState.IsValid)
             {
@@ -72,11 +74,11 @@ namespace YSKProje.ToDo.Web.Controllers
                     Name = model.Name,
                     Surname = model.Surname
                 };
-                
-             var result= await  _userManager.CreateAsync(user,model.Password);
+
+                var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                 var addroleResult= await _userManager.AddToRoleAsync(user, "Member");
+                    var addroleResult = await _userManager.AddToRoleAsync(user, "Member");
                     if (addroleResult.Succeeded)
                     {
                         return RedirectToAction("Index");
@@ -96,25 +98,26 @@ namespace YSKProje.ToDo.Web.Controllers
 
         public async Task<IActionResult> CikisYap()
         {
-           await _signInManager.SignOutAsync();
+            await _signInManager.SignOutAsync();
             return RedirectToAction("Index");
         }
         public IActionResult StatusCode(int? code)
         {
-            if (code==404)
+            if (code == 404)
             {
                 ViewBag.Code = code;
                 ViewBag.Message = "Sayfa Bulunamadı";
             }
-           
+
             return View();
         }
         public IActionResult Error()
         {
-            var exceptionHandlerPathFeature = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
-          ViewBag.path=exceptionHandlerPathFeature.Path;
-          ViewBag.message=exceptionHandlerPathFeature.Error.Message;
-           
+            var exceptionHandler = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
+            _customLogger.LogError($"Hatanın Oluştuğu Yer:{exceptionHandler.Path}\nHata Mesajı:{exceptionHandler.Error.Message}\nStack Trace: {exceptionHandler.Error.StackTrace}");
+            ViewBag.path = exceptionHandler.Path;
+            ViewBag.message = exceptionHandler.Error.Message;
+
             return View();
         }
     }

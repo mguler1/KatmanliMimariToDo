@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using YSKProje.ToDo.Business.Concrete;
+using YSKProje.ToDo.Business.CustomLogger;
 using YSKProje.ToDo.Business.Interfaces;
 using YSKProje.ToDo.DataAccess.Concrete.EntityFrameworkCore.Repositories;
 using YSKProje.ToDo.DataAccess.Interfaces;
@@ -24,6 +25,8 @@ namespace YSKProje.ToDo.Business.DiContainer
             services.AddScoped<IAciliyetDal, EfAciliyetRepository>();
             services.AddScoped<IRaporDal, EfRaporRepository>();
             services.AddScoped<IAppUserDal, EfAppUserRepository>();
+
+            services.AddTransient<ICustomLogger, NlogLogger>();
         }
     }
 }
