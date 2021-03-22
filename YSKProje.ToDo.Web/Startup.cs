@@ -54,6 +54,10 @@ namespace YSKProje.ToDo.Web
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");//production da hata sayfasý
+            }
             app.UseStatusCodePagesWithReExecute("/Home/StatusCode", "?code={0}");
             app.UseRouting();
             app.UseAuthentication();

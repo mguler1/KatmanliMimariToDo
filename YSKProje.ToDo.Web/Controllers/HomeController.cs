@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using YskProje.Todo.DTO.DTOs.AppUserDto;
@@ -105,6 +106,14 @@ namespace YSKProje.ToDo.Web.Controllers
                 ViewBag.Code = code;
                 ViewBag.Message = "Sayfa Bulunamadı";
             }
+           
+            return View();
+        }
+        public IActionResult Error()
+        {
+            var exceptionHandlerPathFeature = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
+          ViewBag.path=exceptionHandlerPathFeature.Path;
+          ViewBag.message=exceptionHandlerPathFeature.Error.Message;
            
             return View();
         }
