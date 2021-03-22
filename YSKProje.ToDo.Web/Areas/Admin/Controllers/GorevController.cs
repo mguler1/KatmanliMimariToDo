@@ -55,6 +55,7 @@ namespace YSKProje.ToDo.Web.Areas.Admin.Controllers
                 });
                 return RedirectToAction("Index");
             }
+            ViewBag.Aciliyetler = new SelectList(_aciliyetService.GetirHepsi(), "Id", "Tanim");
             return View(model);
 
         }
