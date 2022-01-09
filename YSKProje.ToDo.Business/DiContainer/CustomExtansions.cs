@@ -19,12 +19,14 @@ namespace YSKProje.ToDo.Business.DiContainer
             services.AddScoped<IRaporService, RaporManager>();
             services.AddScoped<IAppUserService, AppUserManager>();
             services.AddScoped<IDosyaService, DosyaManager>();
+            services.AddScoped<IUrunService, UrunManager>();
 
 
             services.AddScoped<IGorevDal, EfGorevRepository>();
             services.AddScoped<IAciliyetDal, EfAciliyetRepository>();
             services.AddScoped<IRaporDal, EfRaporRepository>();
             services.AddScoped<IAppUserDal, EfAppUserRepository>();
+            services.AddScoped<IUrunDal, EfUrunRepository>();
 
             services.AddTransient<ICustomLogger, NlogLogger>();
         }

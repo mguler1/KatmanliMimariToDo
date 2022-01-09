@@ -13,6 +13,7 @@ namespace YskProje.Todo.DTO.DTOs.GorevDto
         public string Aciklama { get; set; }
         public DateTime OlusturulmaTarih { get; set; }
         public Aciliyet Aciliyet { get; set; }
+        public Urun Urun { get; set; }
         public AppUser AppUser { get; set; }
         public List<Rapor> Raporlar { get; set; }
     }

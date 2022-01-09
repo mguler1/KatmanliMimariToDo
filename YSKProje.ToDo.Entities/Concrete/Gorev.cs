@@ -14,6 +14,8 @@ namespace YSKProje.ToDo.Entities.Concrete
 
         public int AciliyetId { get; set; }
         public Aciliyet Aciliyet { get; set; }
+        public int? UrunId { get; set; }
+        public Urun Urun { get; set; }
 
         public int? AppUserId { get; set; }
         public AppUser AppUser { get; set; }
