@@ -14,6 +14,8 @@ namespace YskProje.Todo.DTO.DTOs.GorevDto
         public bool Durum { get; set; }
         public DateTime OlusturulmaTarih { get; set; }
 
+        public int UrunId { get; set; }
+        public Urun Urun { get; set; }
         public int AciliyetId { get; set; }
         public Aciliyet Aciliyet { get; set; }
     }

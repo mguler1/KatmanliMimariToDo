@@ -7,6 +7,7 @@ using YskProje.Todo.DTO.DTOs.AciliyetDto;
 using YskProje.Todo.DTO.DTOs.AppUserDto;
 using YskProje.Todo.DTO.DTOs.GorevDto;
 using YskProje.Todo.DTO.DTOs.RaporDto;
+using YskProje.Todo.DTO.DTOs.UrunDto;
 using YSKProje.ToDo.Entities.Concrete;
 
 namespace YSKProje.ToDo.Web.Mapping.AutoMapperProfile
@@ -48,7 +49,17 @@ namespace YSKProje.ToDo.Web.Mapping.AutoMapperProfile
             CreateMap<RaporAddDto, Rapor>();
             CreateMap<Rapor, RaporAddDto>();
             CreateMap<RaporUpdateDto, Rapor>();
-            CreateMap<Rapor, RaporUpdateDto>(); 
+            CreateMap<Rapor, RaporUpdateDto>();
+            #endregion
+
+            #region Urun-UrunDto
+            CreateMap<UrunAddDto, Urun>();
+            CreateMap<Urun, UrunAddDto>();
+            CreateMap<UrunListDto, Urun>();
+            CreateMap<Urun, UrunListDto>();
+            CreateMap<UrunUpdateDto, Urun>();
+            CreateMap<Urun, UrunUpdateDto>();
+    
             #endregion
         }
     }
