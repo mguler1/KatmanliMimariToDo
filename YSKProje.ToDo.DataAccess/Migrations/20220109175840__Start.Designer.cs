@@ -10,8 +10,8 @@ using YSKProje.ToDo.DataAccess.Concrete.EntityFrameworkCore.Contexts;
 namespace YSKProje.ToDo.DataAccess.Migrations
 {
     [DbContext(typeof(TodoContext))]
-    [Migration("20200328162507_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20220109175840__Start")]
+    partial class _Start
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -122,6 +122,22 @@ namespace YSKProje.ToDo.DataAccess.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("YSKProje.ToDo.Entities.Concrete.Aciliyet", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Tanim")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Aciliyetler");
+                });
+
             modelBuilder.Entity("YSKProje.ToDo.Entities.Concrete.AppRole", b =>
                 {
                     b.Property<int>("Id")
@@ -178,6 +194,10 @@ namespace YSKProje.ToDo.DataAccess.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
                     b.Property<string>("NormalizedEmail")
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
@@ -197,6 +217,10 @@ namespace YSKProje.ToDo.DataAccess.Migrations
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Surname")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
@@ -230,9 +254,15 @@ namespace YSKProje.ToDo.DataAccess.Migrations
                     b.Property<string>("Aciklama")
                         .HasColumnType("ntext");
 
+                    b.Property<int>("AciliyetId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Ad")
                         .HasColumnType("nvarchar(200)")
                         .HasMaxLength(200);
+
+                    b.Property<int?>("AppUserId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("Durum")
                         .HasColumnType("bit");
@@ -240,9 +270,63 @@ namespace YSKProje.ToDo.DataAccess.Migrations
                     b.Property<DateTime>("OlusturulmaTarih")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("UrunId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Calismalar");
+                    b.HasIndex("AciliyetId");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("UrunId");
+
+                    b.ToTable("Gorevler");
+                });
+
+            modelBuilder.Entity("YSKProje.ToDo.Entities.Concrete.Rapor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Detay")
+                        .HasColumnType("ntext");
+
+                    b.Property<int>("GorevId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Tanim")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GorevId");
+
+                    b.ToTable("Raporlar");
+                });
+
+            modelBuilder.Entity("YSKProje.ToDo.Entities.Concrete.Urun", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("UrunAciklama")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UrunAdi")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Urunler");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -292,6 +376,33 @@ namespace YSKProje.ToDo.DataAccess.Migrations
                     b.HasOne("YSKProje.ToDo.Entities.Concrete.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("YSKProje.ToDo.Entities.Concrete.Gorev", b =>
+                {
+                    b.HasOne("YSKProje.ToDo.Entities.Concrete.Aciliyet", "Aciliyet")
+                        .WithMany("Gorevler")
+                        .HasForeignKey("AciliyetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("YSKProje.ToDo.Entities.Concrete.AppUser", "AppUser")
+                        .WithMany("Gorevler")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("YSKProje.ToDo.Entities.Concrete.Urun", "Urun")
+                        .WithMany("Gorevler")
+                        .HasForeignKey("UrunId");
+                });
+
+            modelBuilder.Entity("YSKProje.ToDo.Entities.Concrete.Rapor", b =>
+                {
+                    b.HasOne("YSKProje.ToDo.Entities.Concrete.Gorev", "Gorev")
+                        .WithMany("Raporlar")
+                        .HasForeignKey("GorevId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
