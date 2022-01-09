@@ -3,10 +3,23 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace YSKProje.ToDo.DataAccess.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class _Start : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Aciliyetler",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Tanim = table.Column<string>(maxLength: 100, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Aciliyetler", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -41,7 +54,9 @@ namespace YSKProje.ToDo.DataAccess.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(maxLength: 100, nullable: true),
+                    Surname = table.Column<string>(maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -49,19 +64,17 @@ namespace YSKProje.ToDo.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Calismalar",
+                name: "Urunler",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Ad = table.Column<string>(maxLength: 200, nullable: true),
-                    Aciklama = table.Column<string>(type: "ntext", nullable: true),
-                    Durum = table.Column<bool>(nullable: false),
-                    OlusturulmaTarih = table.Column<DateTime>(nullable: false)
+                    UrunAdi = table.Column<string>(nullable: true),
+                    UrunAciklama = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Calismalar", x => x.Id);
+                    table.PrimaryKey("PK_Urunler", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -170,6 +183,64 @@ namespace YSKProje.ToDo.DataAccess.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Gorevler",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Ad = table.Column<string>(maxLength: 200, nullable: true),
+                    Aciklama = table.Column<string>(type: "ntext", nullable: true),
+                    Durum = table.Column<bool>(nullable: false),
+                    OlusturulmaTarih = table.Column<DateTime>(nullable: false),
+                    AciliyetId = table.Column<int>(nullable: false),
+                    UrunId = table.Column<int>(nullable: true),
+                    AppUserId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Gorevler", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Gorevler_Aciliyetler_AciliyetId",
+                        column: x => x.AciliyetId,
+                        principalTable: "Aciliyetler",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Gorevler_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
+                    table.ForeignKey(
+                        name: "FK_Gorevler_Urunler_UrunId",
+                        column: x => x.UrunId,
+                        principalTable: "Urunler",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Raporlar",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Tanim = table.Column<string>(maxLength: 100, nullable: false),
+                    Detay = table.Column<string>(type: "ntext", nullable: true),
+                    GorevId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Raporlar", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Raporlar_Gorevler_GorevId",
+                        column: x => x.GorevId,
+                        principalTable: "Gorevler",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -208,6 +279,26 @@ namespace YSKProje.ToDo.DataAccess.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Gorevler_AciliyetId",
+                table: "Gorevler",
+                column: "AciliyetId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Gorevler_AppUserId",
+                table: "Gorevler",
+                column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Gorevler_UrunId",
+                table: "Gorevler",
+                column: "UrunId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Raporlar_GorevId",
+                table: "Raporlar",
+                column: "GorevId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -228,13 +319,22 @@ namespace YSKProje.ToDo.DataAccess.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Calismalar");
+                name: "Raporlar");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "Gorevler");
+
+            migrationBuilder.DropTable(
+                name: "Aciliyetler");
+
+            migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Urunler");
         }
     }
 }
