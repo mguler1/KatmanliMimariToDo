@@ -6,6 +6,7 @@ namespace YskProje.Todo.DTO.DTOs.UrunDto
 {
    public class UrunUpdateDto
     {
+        public int Id { get; set; }
         public string UrunAdi { get; set; }
         public string UrunAciklama { get; set; }
     }

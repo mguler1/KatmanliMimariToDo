@@ -9,6 +9,7 @@ using YskProje.Todo.DTO.DTOs.AciliyetDto;
 using YskProje.Todo.DTO.DTOs.AppUserDto;
 using YskProje.Todo.DTO.DTOs.GorevDto;
 using YskProje.Todo.DTO.DTOs.RaporDto;
+using YskProje.Todo.DTO.DTOs.UrunDto;
 using YSKProje.ToDo.Business.Concrete;
 using YSKProje.ToDo.Business.Interfaces;
 using YSKProje.ToDo.Business.ValidationRules.FluentValidation;
@@ -24,11 +25,14 @@ namespace YSKProje.ToDo.Web.CustomCollectionExtansions
             services.AddTransient<IValidator<AciliyetAddDto>, AciliyetAddValidator>();
             services.AddTransient<IValidator<AciliyetUpdateDto>, AciliyetUpdateValidator>();
             services.AddTransient<IValidator<AppUserAddDto>, AppUserAddValidator>();
-            // services.AddTransient<IValidator<AppSignInAddDto>, AppUserSignInValidator>();
+          //  services.AddTransient<IValidator<AppSignInAddDto>, AppUserSignInValidator>();
             services.AddTransient<IValidator<GorevAddDto>, GorevAddValidator>();
             services.AddTransient<IValidator<GorevUpdateDto>, GorevUpdateValidator>();
             services.AddTransient<IValidator<RaporAddDto>, RaporAddValidator>();
             services.AddTransient<IValidator<RaporUpdateDto>, RaporUpdateValidator>();
+            services.AddTransient<IValidator<UrunAddDto>, UrunAddValidator>();
+            services.AddTransient<IValidator<UrunUpdateDto>, UrunUpdateValidator>();
+
         }
 
     }
