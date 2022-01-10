@@ -4,7 +4,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 <form asp-action="GuncelleGorev" class="w-75 mx-auto p-3" method="post">
-    <input type="hidden"asp-for="@Model.Id"/>
+    <input type="hidden" asp-for="@Model.Id" />
     <div class="form-group">
         <label>Ad </label>
         <span asp-validation-for="Ad" class="text-danger"></span>
@@ -16,13 +16,19 @@
         <textarea asp-for="Aciklama" class="form-control"></textarea>
     </div>
     <div class="form-group">
-        <label>Aciliyet Durumu Seçiniz </label>
-        <span asp-validation-for="AciliyetId" class="text-danger"></span>
-        <select asp-for="AciliyetId" class="form-control" asp-items="ViewBag.Aciliyetler">
-            <option hidden value="-1">Aciliyet Seçiniz</option>
+        <label>Ürün  Seçiniz </label>
+        <span asp-validation-for="UrunId" class="text-danger"></span>
+        <select asp-for="UrunId" class="form-control" asp-items="ViewBag.Urun">
+            <option hidden value="-1">Ürün Seçiniz</option>
         </select>
-    </div>
-    <button type="submit" class="btn btn-info btn-sm"><i class="fas fa-check"></i> Kaydet</button>
+        <div class="form-group">
+            <label>Aciliyet Durumu Seçiniz </label>
+            <span asp-validation-for="AciliyetId" class="text-danger"></span>
+            <select asp-for="AciliyetId" class="form-control" asp-items="ViewBag.Aciliyetler">
+                <option hidden value="-1">Aciliyet Seçiniz</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-info btn-sm"><i class="fas fa-check"></i> Kaydet</button>
 </form>
 @section JavaScript{
 

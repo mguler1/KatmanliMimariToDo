@@ -20,12 +20,14 @@ namespace YSKProje.ToDo.Web.Areas.Admin.Controllers
 
         private readonly IGorevService _gorevService;
         private readonly IAciliyetService _aciliyetService;
+        private readonly IUrunService _urunService;
         private readonly IMapper _mapper;
-        public GorevController(IGorevService gorevService, IAciliyetService aciliyetService, IMapper mapper)
+        public GorevController(IGorevService gorevService, IAciliyetService aciliyetService, IUrunService urunService, IMapper mapper)
         {
             _mapper = mapper;
             _gorevService = gorevService;
             _aciliyetService = aciliyetService;
+            _urunService = urunService;
         }
         public IActionResult Index()
         {
@@ -38,6 +40,7 @@ namespace YSKProje.ToDo.Web.Areas.Admin.Controllers
         {
 
             ViewBag.Aciliyetler = new SelectList(_aciliyetService.GetirHepsi(), "Id", "Tanim");
+            ViewBag.Urun = new SelectList(_urunService.GetirHepsi(), "Id", "UrunAdi");
             TempData["Active"] = "gorev";
             return View(new GorevAddDto());
         }
@@ -52,10 +55,12 @@ namespace YSKProje.ToDo.Web.Areas.Admin.Controllers
                     Aciklama = model.Aciklama,
                     Ad = model.Ad,
                     AciliyetId = model.AciliyetId,
+                    UrunId=model.UrunId
                 });
                 return RedirectToAction("Index");
             }
             ViewBag.Aciliyetler = new SelectList(_aciliyetService.GetirHepsi(), "Id", "Tanim");
+            ViewBag.Urun = new SelectList(_urunService.GetirHepsi(), "Id", "UrunAdi");
             return View(model);
 
         }
@@ -64,6 +69,7 @@ namespace YSKProje.ToDo.Web.Areas.Admin.Controllers
             TempData["Active"] = "gorev";
             var gorev = _gorevService.GetirIdile(id);
             ViewBag.Aciliyetler = new SelectList(_aciliyetService.GetirHepsi(), "Id", "Tanim", gorev.AciliyetId);
+            ViewBag.Urun = new SelectList(_urunService.GetirHepsi(), "Id", "UrunAdi");
             return View(_mapper.Map<GorevUpdateDto>(_gorevService.GetirIdile(id)));
         }
 
@@ -85,6 +91,7 @@ namespace YSKProje.ToDo.Web.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.Aciliyetler = new SelectList(_aciliyetService.GetirHepsi(), "Id", "Tanim", model.AciliyetId);
+            ViewBag.Urun = new SelectList(_urunService.GetirHepsi(), "Id", "UrunAdi");
             return View(model);
         }
         public IActionResult SilGorev(int id )

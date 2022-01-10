@@ -1,5 +1,42 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model List<UrunListDto>
+
 @{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
+@if (Model.Count != 0)
+{
+    <a asp-action="EkleUrun" asp-controller="Urun" class="btn btn-sm btn-outline-dark my-2"><i class="fas fa-plus-circle"></i> Ürün Ekle</a>
+    <table class="table table-sm table-hover">
+        <thead>
+            <tr>
+                <th>Ürün Adı</th>
+                <th>Ürün Açıklama</th>
+                <th>İşlem</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.UrunAdi</td>
+                    <td>@item.UrunAciklama</td>
+                    <td>
+                        <a asp-action="GuncelleUrun" asp-controller="Urun" asp-route-id="@item.Id" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="text-center lead mt-4">
+        <p class="lead">
+            Sistemde Kayıtlı Ürün  Bulunamadı
+        </p>
+        <a asp-action="EkleUrun" asp-controller="Urun" class="btn btn-sm btn-outline-dark my-2"><i class="fas fa-plus-circle"></i> Ürün  Ekle</a>
+
+    </div>
+}
+

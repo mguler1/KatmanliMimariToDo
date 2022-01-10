@@ -9,7 +9,8 @@ namespace YskProje.Todo.DTO.DTOs.GorevDto
       
         public string Ad { get; set; }
         public string Aciklama { get; set; }
-        public int AciliyetId { get; set; }
         public int UrunId { get; set; }
+        public int AciliyetId { get; set; }
+        
     }
 }
